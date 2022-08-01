@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import {Routes, Route} from "react-router-dom";
+import Home from "./components/Home";
+import AllQuotes from "./components/pages/AllQuotes";
+import DailyQuotes from "./components/pages/DailyQuotes";
+import Books from "./components/pages/Books";
+import PostQuotes from "./components/pages/PostQuotes";
+import Authors from "./components/pages/Authors";
+import LogIn from "./components/pages/LogIn";
+import Register from "./components/pages/Register";
+import SocialLogin from "./components/SocialLogin";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="root_point">
+        <Navbar/>         
+        <Routes>
+             <Route path="/" element={<Home/>}></Route>
+             <Route path="/home" element={<Home/>}></Route>
+             <Route path="/allQuotes" element={<AllQuotes/>}></Route>
+             <Route path="/dailyQuotes" element={<DailyQuotes/>}></Route>
+             <Route path="/books" element={<Books/>}></Route>
+             <Route path="/postQuotes" element={<PostQuotes/>}></Route>
+             <Route path="/authors" element={<Authors/>}></Route>
+             <Route path="/socialLogin" element={<SocialLogin/>}></Route>
+             <Route path="/logIn" element={<LogIn/>}></Route>
+             <Route path="/register" element={<Register/>}></Route>
+        </Routes>
+        <Footer/>
     </div>
   );
 }
-
 export default App;
