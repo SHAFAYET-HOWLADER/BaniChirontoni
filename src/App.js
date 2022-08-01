@@ -10,6 +10,7 @@ import Authors from "./components/pages/Authors";
 import LogIn from "./components/pages/LogIn";
 import Register from "./components/pages/Register";
 import SocialLogin from "./components/SocialLogin";
+import RequireAuth from "./components/shared/RequireAuth";
 
 function App() {
   return (
@@ -21,7 +22,11 @@ function App() {
              <Route path="/allQuotes" element={<AllQuotes/>}></Route>
              <Route path="/dailyQuotes" element={<DailyQuotes/>}></Route>
              <Route path="/books" element={<Books/>}></Route>
-             <Route path="/postQuotes" element={<PostQuotes/>}></Route>
+             <Route path="/postQuotes" element={
+              <RequireAuth>
+                 <PostQuotes/>
+              </RequireAuth>
+             }></Route>
              <Route path="/authors" element={<Authors/>}></Route>
              <Route path="/socialLogin" element={<SocialLogin/>}></Route>
              <Route path="/logIn" element={<LogIn/>}></Route>

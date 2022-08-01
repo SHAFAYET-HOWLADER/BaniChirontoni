@@ -1,4 +1,8 @@
 import React from 'react'
+import {signOut } from 'firebase/auth';
+import auth from '../firebase.init';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import CustomLink from './CustomLink';
 import {
   Box,
   Flex,
@@ -16,8 +20,7 @@ import {
   useColorMode,
   Center,
 } from '@chakra-ui/react';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import CustomLink from './CustomLink';
+import { useAuthState } from 'react-firebase-hooks/auth';
 const NavLink = ({ children }) => (
     <Link
       px={2}
@@ -32,8 +35,12 @@ const NavLink = ({ children }) => (
     </Link>
   );
 const Navbar = () => {
+  const [user] = useAuthState(auth)
     const { colorMode, toggleColorMode } = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const logout = () => {
+      signOut(auth);
+    };
   return (
     <>
     <Box bg={useColorModeValue('gray.100', 'gray.900')} px={20}>
@@ -101,7 +108,11 @@ const Navbar = () => {
                 </Center>
                 <br />
                 <MenuDivider />
-                <MenuItem>Logout</MenuItem>
+                <MenuItem onClick={logout}>
+                  {user&& <>
+                    Logout
+                  </>}
+                </MenuItem>
               </MenuList>
             </Menu>
           </Stack>

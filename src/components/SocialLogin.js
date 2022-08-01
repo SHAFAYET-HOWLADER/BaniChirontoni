@@ -5,11 +5,17 @@ import { FaFacebook } from 'react-icons/fa';
 import {Button, Center, Stack, Text } from '@chakra-ui/react';
 import auth from '../firebase.init';
 import Loading from './shared/Loading';
+import { useLocation, useNavigate } from 'react-router-dom';
 const SocialLogin = () => {
+  const navigate = useNavigate();
+  const location = useLocation()
   const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
-  console.log(googleUser)
+  const from = location.state?.from?.pathname || "/"
   if(googleLoading){
     return <Loading/>
+  }
+  if(googleUser){
+    navigate(from, {replace: true})
   }
   return (
     <>

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import {
   Flex,
   Box,
@@ -12,25 +13,47 @@ import {
   Button,
   Heading,
   Text,
-  useColorModeValue,
   Link,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
+import auth from '../../firebase.init';
 
 const Register = () => {
+  const firstNameRef = useRef();
+  const lastNameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
   const navigate = useNavigate()
   const navigateToLogin = ()=>{
     navigate("/login")
   }
   const [showPassword, setShowPassword] = useState(false);
+  const [
+    createUserWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useCreateUserWithEmailAndPassword(auth);
+   let signUpError;
+   if(error){
+    return signUpError = <p>Error: {error.message}</p>
+   }
+  const getInputValue = (event)=>{
+     event.preventDefault();
+     const firstName = firstNameRef.current.value
+     const lastName = lastNameRef.current.value
+     const email = emailRef.current.value
+     const password = passwordRef.current.value
+     createUserWithEmailAndPassword(email, password)
+  }
   return (
 <Flex
       minH={'100vh'}
       align={'center'}
       justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}>
+     >
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
@@ -42,32 +65,32 @@ const Register = () => {
         </Stack>
         <Box
           rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
-            <HStack>
+                  <form onSubmit={getInputValue}>
+                  <HStack>
               <Box>
-                <FormControl id="firstName" isRequired>
+                <FormControl isRequired>
                   <FormLabel>First Name</FormLabel>
-                  <Input type="text" />
+                  <Input  ref={firstNameRef} type="text" />
                 </FormControl>
               </Box>
               <Box>
-                <FormControl id="lastName">
+                <FormControl>
                   <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
+                  <Input   ref={lastNameRef}type="text" />
                 </FormControl>
               </Box>
             </HStack>
-            <FormControl id="email" isRequired>
+            <FormControl  isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input  ref={emailRef}  type="email" />
             </FormControl>
-            <FormControl id="password" isRequired>
+            <FormControl isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} />
+                <Input ref={passwordRef}  type={showPassword ? 'text' : 'password'} />
                 <InputRightElement h={'full'}>
                   <Button
                     variant={'ghost'}
@@ -81,6 +104,8 @@ const Register = () => {
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
+                onClick={getInputValue}
+                type='submit'
                 loadingText="Submitting"
                 size="lg"
                 bg={'blue.400'}
@@ -88,9 +113,11 @@ const Register = () => {
                 _hover={{
                   bg: 'blue.500',
                 }}>
+                  {signUpError}
                 Sign up
               </Button>
             </Stack>
+                  </form>
             <Stack pt={6}>
               <Text align={'center'}>
                 Already a user? <Link onClick={navigateToLogin} color={'blue.400'}>Login</Link>
