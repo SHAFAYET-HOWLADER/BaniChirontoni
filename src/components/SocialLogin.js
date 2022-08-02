@@ -9,8 +9,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const SocialLogin = () => {
   const navigate = useNavigate();
   const location = useLocation()
-  const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
+  const [signInWithGoogle, googleUser, googleLoading] = useSignInWithGoogle(auth);
   const from = location.state?.from?.pathname || "/"
+  console.log(googleUser)
   if(googleLoading){
     return <Loading/>
   }

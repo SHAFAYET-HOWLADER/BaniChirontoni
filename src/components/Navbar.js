@@ -91,7 +91,7 @@ const Navbar = () => {
                 minW={0}>
                 <Avatar
                   size={'sm'}
-                  src={'https://avatars.dicebear.com/api/male/username.svg'}
+                  src={user?.photoURL}
                 />
               </MenuButton>
               <MenuList alignItems={'center'}>
@@ -99,12 +99,12 @@ const Navbar = () => {
                 <Center>
                   <Avatar
                     size={'2xl'}
-                    src={'https://avatars.dicebear.com/api/male/username.svg'}
+                    src={user?.photoURL}
                   />
                 </Center>
                 <br />
                 <Center>
-                  <p>Username</p>
+                  <p>{user?.displayName}</p>
                 </Center>
                 <br />
                 <MenuDivider />
