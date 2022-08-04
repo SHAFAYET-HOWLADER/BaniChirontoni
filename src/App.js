@@ -1,3 +1,10 @@
+import {
+  ChakraProvider,
+  Container,
+  Stack,
+  Heading,
+  Text,
+} from '@chakra-ui/react'
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import {Routes, Route} from "react-router-dom";
@@ -11,7 +18,6 @@ import LogIn from "./components/pages/LogIn";
 import Register from "./components/pages/Register";
 import SocialLogin from "./components/SocialLogin";
 import RequireAuth from "./components/shared/RequireAuth";
-
 function App() {
   return (
     <div className="root_point">
